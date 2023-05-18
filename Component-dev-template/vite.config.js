@@ -24,7 +24,7 @@ export default defineConfig({
     lib: {
       entry: "src/main.js",
       name: "<<name>>",
-      fileName: "inddex",
+      fileName: "index",
     },
   },
 });
