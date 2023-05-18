@@ -10,7 +10,7 @@ export default defineConfig({
       emitCss: false,
     }),
     svelte({
-      preprocess: sveltePreprocess(),
+      preprocess: sveltePreprocess({}),
       include: /Component\.svelte$/,
       compilerOptions: {
         customElement: true,
@@ -22,9 +22,9 @@ export default defineConfig({
     sourcemap: true,
     target: "modules",
     lib: {
-      entry: "src/main.js",
+      entry: "src/build.js",
       name: "<<name>>",
-      fileName: "inddex",
+      fileName: "index",
     },
   },
 });
