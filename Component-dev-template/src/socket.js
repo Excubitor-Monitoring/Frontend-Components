@@ -3,7 +3,6 @@ let sublist = [];
 
 export async function connectSocket(url, callback){
     socket = new WebSocket(url);
-    console.log(`SOCKET: ${socket}`);
     socket.addEventListener("message", (socketEvent) => {
 
         const data = JSON.parse(socketEvent.data);
@@ -11,7 +10,6 @@ export async function connectSocket(url, callback){
             detail: JSON.parse(data.value)
         })
         window.dispatchEvent(event);
-        console.log(socketEvent.data);
     });
 
     socket.addEventListener("open", () => {
@@ -33,7 +31,6 @@ export async function connectSocket(url, callback){
             }));
         })
 
-        console.log("ADDED LISTENERS");
         callback();
     })
 

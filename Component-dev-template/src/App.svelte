@@ -3,7 +3,7 @@
 	import Component from "./lib/Component.svelte";
 	import { connectSocket } from "./socket";
 
-	let asyncComponent = null;
+	let container;
 
 	async function login(){
 		let auth = await fetch(`http://${import.meta.env.VITE_API_URI}/auth`, {
@@ -18,7 +18,10 @@
         })
 		let json = await auth.json();
 		console.log(`TOKEN: ${json.access_token}`);
-		connectSocket(`ws://${import.meta.env.VITE_API_URI}/ws?token=${json.access_token}`, () => {asyncComponent = Component})
+		connectSocket(`ws://${import.meta.env.VITE_API_URI}/ws?token=${json.access_token}`, () => {
+			const child = document.createElement(import.meta.env.VITE_HTMLTAG);
+			container.appendChild(child);
+		})
 	}
 	
 	onMount(() => {
@@ -26,4 +29,4 @@
 	});
 </script>
 
-<svelte:component this={asyncComponent} />
+<div bind:this={container}/>
