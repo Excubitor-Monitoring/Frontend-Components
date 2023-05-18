@@ -1,28 +1,30 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import sveltePreprocess from "svelte-preprocess";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ command, mode, ssrBuild }) => {
-  
-  if(command == "serve"){
-    return {
-      plugins: [svelte()]
-    }
-  }
-
-  else{
-    return{
-      build:{
-        lib:{
-          entry: './src/lib/main.js',
-          name: 'index',
-        }
+export default defineConfig({
+  plugins: [
+    svelte({
+      preprocess: sveltePreprocess({}),
+      exclude: /\.component\.svelte$/,
+      emitCss: false,
+    }),
+    svelte({
+      preprocess: sveltePreprocess(),
+      include: /\.component\.svelte$/,
+      compilerOptions: {
+        customElement: true,
       },
-      plugins: [svelte({
-        compilerOptions: {
-          customElement: true,
-        },
-      })],
-    }
-  }
-})
+      emitCss: false,
+    }),
+  ],
+  build: {
+    sourcemap: true,
+    target: "modules",
+    lib: {
+      entry: "src/build.js",
+      name: "<<name>>",
+      fileName: "components",
+    },
+  },
+});
