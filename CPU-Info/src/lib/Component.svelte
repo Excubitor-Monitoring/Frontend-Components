@@ -62,7 +62,7 @@
 	];
 </script>
 
-<div bind:this={elem} class="flex flex-wrap gap-4">
+<div bind:this={elem} class="flex flex-wrap gap-4 w-full min-h-full justify-evenly items-center">
 	{#each data as cpu}
 		<CpuCard {...cpu} />
 	{/each}
