@@ -1,7 +1,7 @@
 <svelte:options tag="counter-test" />
 
 <script>
-  import css from './Counter.css';
+  import css from './Component.css';
   import Badge from './Badge.svelte';
   import { onMount } from 'svelte/internal';
   export let message = 'None';
@@ -25,7 +25,7 @@
   };
 </script>
 
-<button bind:this={elem} on:click={increment}>
+<button bind:this={elem} on:click={increment} class="bg-red-600">
   count = {count}
 </button>
 <Badge {message} />

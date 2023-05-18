@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [
     svelte({
       preprocess: sveltePreprocess({}),
-      exclude: /\.component\.svelte$/,
+      exclude: /Component\.svelte$/,
       emitCss: false,
     }),
     svelte({
       preprocess: sveltePreprocess(),
-      include: /\.component\.svelte$/,
+      include: /Component\.svelte$/,
       compilerOptions: {
         customElement: true,
       },
@@ -22,9 +22,9 @@ export default defineConfig({
     sourcemap: true,
     target: "modules",
     lib: {
-      entry: "src/build.js",
+      entry: "src/main.js",
       name: "<<name>>",
-      fileName: "components",
+      fileName: "inddex",
     },
   },
 });
