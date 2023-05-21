@@ -25,19 +25,11 @@
 		setStyle();
 
 		window.addEventListener("CPU.CpuInfo", (event) => {
+			const time = Date.now();
 			event.detail.forEach((element, index) => {
-				let tmp_speed = [];
-
-				if (data[index]?.clock_speed != undefined)
-					tmp_speed = data[index].clock_speed;
-
-				if (tmp_speed.length >= 10) tmp_speed.shift();
-
-				tmp_speed.push([Date.now(), element.clock_speed]);
-
 				data[index] = {
 					...element,
-					clock_speed: tmp_speed,
+					clock_speed: {x: time, y: element.clock_speed}
 				};
 			});
 		});
@@ -49,17 +41,7 @@
 		);
 	});
 
-	let data = [
-		{
-			id: 0,
-			core_id: 0,
-			socket_id: 0,
-			model_name: "Processor1",
-			clock_speed: undefined,
-			cache_size: 0,
-			flags: "flag_1 flag_2",
-		},
-	];
+	$: data = [];
 </script>
 
 <div bind:this={elem} class="flex flex-wrap gap-4 w-full min-h-full justify-evenly items-center">
