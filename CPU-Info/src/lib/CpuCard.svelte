@@ -1,47 +1,52 @@
 <script>
-    import { chart } from "svelte-apexcharts";
     import {flag_codes} from "./flags"
+
+    import Chart from "chart.js/auto";
+	import 'chartjs-adapter-date-fns';
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        chart = new Chart(canvas, options);
+    })
 
     export let id = 0;
     export let core_id = 0;
     export let socket_id = 0;
     export let model_name = "";
-    export let clock_speed = [];
+    export let clock_speed;
     export let cache_size = 0;
     export let flags = "";
+
+    $: console.log(clock_speed);
 
     let hover = false;
 
 	let tooltip = "\n";
 
+    let chart;
+    let canvas;
+
     $: flag_array = flags.toUpperCase().split(" ");
 
-    $: options = {
-        chart: {
-            type: "line",
-            toolbar: {
-                show: false,
-            },
-        },
-        series: [
-            {
-                data: clock_speed,
-            },
-        ],
-        yaxis: {
-            labels: {
-                formatter: function (value) {
-                    return Math.round(value);
-                },
-            },
-        },
-        xaxis: {
-            type: "datetime",
-        },
-        legend: {
-            show: false,
-        },
-    };
+    $: {
+        if (chart?.data.datasets[0].data.length > 10) chart?.data.datasets[0].data.shift()
+        chart?.data.datasets[0].data.push(clock_speed)
+        chart?.update();
+    }
+
+    const options = {
+			type: "line",
+			data: {
+				datasets: [{label: "Clockspeed", data: []}],
+			},
+			options: {
+				scales: {
+					x: {
+						type: "time",
+					},
+				},
+			},
+		};
 </script>
 
 <div
@@ -49,8 +54,7 @@
     on:mouseenter={() => (hover = true)}
     on:mouseleave={() => (hover = false)}
 >
-    {#if hover}
-        <table class="text-left border-collapse divide-y-2 divide-solid">
+        <table class="text-left border-collapse divide-y-2 divide-solid" style={hover ? "" : "display: none"}>
             <tr class="py-2"
                 ><th class="pr-4 whitespace-nowrap">ID</th><td>{id}</td></tr
             >
@@ -71,7 +75,7 @@
             >
             <tr
                 ><th class="py-2 pr-4 whitespace-nowrap">Clock speed</th><td
-                    >{clock_speed.at(-1)[1]}</td
+                    >{clock_speed.y}</td
                 ></tr
             >
             <tr
@@ -97,8 +101,10 @@
                 </td>
             </tr>
         </table>
-    {:else}
-        <h1 class="text-center text-2xl font-bold">ID {id}</h1>
-        <div use:chart={options} />
-    {/if}
+
+        <div style={hover ? "display: none" : ""}>
+            <h1 class="text-center text-2xl font-bold">ID {id}</h1>
+            <canvas bind:this={canvas}/>
+        </div>
+
 </div>
