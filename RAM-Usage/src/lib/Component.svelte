@@ -1,4 +1,4 @@
-<svelte:options tag="cpu-usage" />
+<svelte:options tag="ram-usage" />
 
 <script>
 	import css from "./Component.css";
