@@ -93,7 +93,7 @@
                         class="flex flex-wrap gap-2 justify-between p-4 max-h-44 overflow-y-scroll"
                     >					
                         {#each flag_array as flag}
-							<div class='py-1 px-2 bg-cyan-700 border-2 border-solid border-cyan-950 rounded-md text-white' on:mouseenter={() => (tooltip = flag_codes[flag])} on:mouseleave={() => (tooltip = "\n")}>
+							<div class='py-1 px-2 bg-cyan-700 border-2 border-solid border-cyan-950 rounded-md text-white' on:mouseenter={() => (flag_codes[flag] == undefined ? tooltip = "\n" : tooltip = flag_codes[flag])} on:mouseleave={() => (tooltip = "\n")}>
 								{flag}
 							</div>
                         {/each}
