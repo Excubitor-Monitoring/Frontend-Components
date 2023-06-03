@@ -31,6 +31,14 @@ export async function connectSocket(url, callback){
             }));
         })
 
+        window.addEventListener("HIST2SOCKET", (event) => {
+            socket.send(JSON.stringify({
+                op: "HIST",
+                target: event.detail.target,
+                value: event.detail.value
+            }));
+        })
+
         callback();
     })
 
