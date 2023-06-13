@@ -4,6 +4,7 @@ let sublist = [];
 export async function connectSocket(url, callback){
     socket = new WebSocket(url);
     socket.addEventListener("message", (socketEvent) => {
+        console.log(socketEvent.data);
 
         const data = JSON.parse(socketEvent.data);
         const event = new CustomEvent(data.target, {
@@ -32,6 +33,8 @@ export async function connectSocket(url, callback){
         })
 
         window.addEventListener("HIST2SOCKET", (event) => {
+
+            console.log(event.detail);
 
             socket.send(JSON.stringify({
                 op: "HIST",

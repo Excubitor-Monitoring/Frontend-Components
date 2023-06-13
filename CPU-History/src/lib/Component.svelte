@@ -19,6 +19,9 @@
 
 	import Chart from "chart.js/auto";
 	import "chartjs-adapter-date-fns";
+    import { setDate } from "date-fns";
+
+	const tzoffset = (new Date()).getTimezoneOffset() * 60000;
 
 	let canvas;
 	let chart;
@@ -27,6 +30,8 @@
 	let to_date;
 	let density;
 	let preset;
+
+	$: density_time = 10**density;
 
 	function printdata() {
 		console.log("From: ", from_date);
@@ -42,14 +47,61 @@
 				detail: {
 					target: "CPU.Usage",
 					value: JSON.stringify({
-						From: new Date(Date.now() - 1000 * 60).toISOString(),
-						Until: new Date().toISOString(),
-						MaxDensity: "1000",
+						From: new Date(from_date).toISOString(),
+						Until: new Date(to_date).toISOString(),
+						max_density: Math.floor(10**density).toString() + "ms",
 					}),
 				},
 			})
 		);
 
+		console.log(new Date(from_date));
+		console.log(new Date(to_date));
+
+	}
+
+	function setTime(template) {
+		to_date = (new Date(Date.now()  - tzoffset)).toISOString().slice(0,16)
+		switch (template) {
+			case "10min":
+				from_date = (new Date(Date.now() - (10*60*1000)  - tzoffset)).toISOString().slice(0,16)
+				density = Math.log10(30 * 1000)
+				break;
+			case "1h":
+				from_date = (new Date(Date.now() - (60*60*1000) - tzoffset)).toISOString().slice(0,16)
+				density = Math.log10(5* 60 * 1000)
+				break;
+			case "1D":
+				from_date = (new Date(Date.now() - (24*60*60*1000) - tzoffset)).toISOString().slice(0,16)
+				density = Math.log10(2 * 60 * 60 * 1000)
+				break;
+			case "1W":
+				from_date = (new Date(Date.now() - (7*24*60*60*1000) - tzoffset)).toISOString().slice(0,16)
+				density = Math.log10(12 * 60 * 60 * 1000)
+				break;
+			case "1M":
+				from_date = (new Date(Date.now() - (30*24*60*60*1000) - tzoffset)).toISOString().slice(0,16)
+				density = Math.log10(2 * 24 * 60 * 60 * 1000)
+				break;
+		}
+
+		getData();
+
+	}
+
+	function setCustom(){
+		preset = "custom";
+		getData();
+	}
+
+	function getTime(ms_time){
+
+		if(ms_time >= 86400000)return (ms_time / (24 * 60 * 60 * 1000)).toFixed(2) + " d"
+		else if(ms_time >= 3600000) return (ms_time / (60 * 60 * 1000)).toFixed(2) + " h"
+		else if(ms_time >= 60000) return (ms_time / (60 * 1000)).toFixed(2) + " min"
+		else if(ms_time >= 1000) return (ms_time / (1000)).toFixed(2) + " s"
+		else return ms_time.toFixed(2) + " ms"
+		getData();
 	}
 
 	let usage = {};
@@ -99,7 +151,7 @@
 			chart.update();
 		});
 
-		getData();
+		setTime("10min");
 
 		const options = {
 			type: "line",
@@ -129,23 +181,23 @@
 			<div class=" flex flex-row gap-5">
 				<div>
 					<label>From: </label>
-					<input type="datetime-local" bind:value={from_date} on:change={printdata}>
+					<input type="datetime-local" bind:value={from_date} on:change={setCustom}>
 				</div>
 				<div>
 					<label>To: </label>
-					<input type="datetime-local" bind:value={to_date} on:change={printdata}>
+					<input type="datetime-local" bind:value={to_date} on:change={setCustom}>
 				</div>
 			</div>
-			<label>Density (): </label>
-			<input type="range" bind:value={density} on:change={printdata}>
+			<label>Density ({getTime(density_time)}): </label>
+			<input type="range" min="1" max="9" step="any" bind:value={density} on:change={setCustom}>
 		</div>
 		
-		<select bind:value={preset} on:change={printdata}>
+		<select bind:value={preset} on:change={() => setTime(preset)}>
 			<option value="10min">10min.</option>
 			<option value="1h">1h</option>
-			<option value="1d">1d</option>
-			<option value="1w">1w</option>
-			<option value="1m">1m</option>
+			<option value="1D">1D</option>
+			<option value="1W">1W</option>
+			<option value="1M">1M</option>
 			<option value="custom">custom</option>
 		</select>
 	</div>
