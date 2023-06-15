@@ -1,4 +1,4 @@
-<svelte:options tag="cpu-usage-history" />
+<svelte:options tag="ram-usage-history" />
 
 <script>
 	import css from "./Component.css";
@@ -45,7 +45,7 @@
 		window.dispatchEvent(
 			new CustomEvent("HIST2SOCKET", {
 				detail: {
-					target: "CPU.Usage",
+					target: "Memory.MemInfo",
 					value: JSON.stringify({
 						From: new Date(from_date).toISOString(),
 						Until: new Date(to_date).toISOString(),
@@ -109,7 +109,7 @@
 	onMount(() => {
 		setStyle();
 
-		window.addEventListener("CPU.Usage", (event) => {
+		window.addEventListener("Memory.MemInfo", (event) => {
 			let time = Date.now();
 
 			let event_data = event.detail.map((obj) => {
@@ -122,6 +122,8 @@
 				};
 			});
 
+			console.log(event_data);
+
 			let chart_data = Object.keys(event_data[0].message.value).map((item) => {
 				return {
 					label: item,
@@ -129,14 +131,15 @@
 				};
 			});
 
+			console.log("CHARTDATA", chart_data);
+
 			event_data.forEach(time_element => {
-				Object.entries(time_element.message.value).forEach(cpu_item => {
-					const data_item = chart_data.find(chart_data_item => chart_data_item.label == cpu_item[0])
-					data_item.data.push({x: time_element.timestamp ,y: cpu_item[1].usage})
+				Object.entries(time_element.message.value).forEach(ram_item => {
+					console.log("RAMITEM", ram_item);
+					const data_item = chart_data.find(chart_data_item => chart_data_item.label == ram_item[0])
+					data_item.data.push({x: time_element.timestamp ,y: ram_item[1]})
 				})
 			})
-
-			console.log(chart_data);
 
 			chart.data.datasets = chart_data;
 
