@@ -138,14 +138,6 @@
 
 			console.log(chart_data);
 
-			/*
-			Object.entries(event.detail).forEach((element, index) => {
-				if (chart.data.datasets[index] == undefined) chart.data.datasets[index] = {label: element[0], data: []}
-				else if (chart.data.datasets[index].data.length >= 10) chart.data.datasets[index].data.shift()
-				chart.data.datasets[index].data.push({x: time, y: element[1].usage})
-			});
-			*/
-
 			chart.data.datasets = chart_data;
 
 			chart.update();
