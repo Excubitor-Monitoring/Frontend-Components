@@ -168,7 +168,7 @@
 
 <div
 	bind:this={elem}
-	class=" flex justify-center items-center min-w-full min-h-full flex-col gap-10"
+	class=" flex justify-center items-center min-w-full min-h-full flex-col gap-10 px-20"
 >
 
 	<div class="flex flex-row justify-center gap-10 items-center min-w-full">

@@ -72,6 +72,6 @@
 	});
 </script>
 
-<div bind:this={elem} class="flex justify-center items-center min-w-full min-h-full">
+<div bind:this={elem} class="flex justify-center items-center min-w-full min-h-full p-20">
 	<canvas bind:this={canvas} />
 </div>
