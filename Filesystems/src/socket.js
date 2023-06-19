@@ -31,6 +31,14 @@ export async function connectSocket(url, callback){
             }));
         })
 
+        window.addEventListener("GET2SOCKET", (event) => {
+            socket.send(JSON.stringify({
+                op: "GET",
+                target: event.detail,
+                value: ""
+            }));
+        })
+
         callback();
     })
 
