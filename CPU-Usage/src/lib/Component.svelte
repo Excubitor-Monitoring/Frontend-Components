@@ -31,11 +31,8 @@
 		setStyle();
 
 		window.addEventListener("CPU.Usage", (event) => {
-			let time = Date.now();
-			console.log(chart.data.datasets);
-			console.log(event.detail);
 
-			
+			let time = Date.now();			
 			Object.entries(event.detail).forEach((element, index) => {
 				if (chart.data.datasets[index] == undefined) chart.data.datasets[index] = {label: element[0], data: []}
 				else if (chart.data.datasets[index].data.length >= 10) chart.data.datasets[index].data.shift()
@@ -60,8 +57,20 @@
 				scales: {
 					x: {
 						type: "time",
+						ticks: {
+							source: 'data'
+						}
 					},
+					y: {
+						min: 0,
+						max: 100,
+					}
 				},
+				elements:{
+					line: {
+						spanGaps: true,
+					}
+				}
 			},
 		};
 
@@ -69,6 +78,6 @@
 	});
 </script>
 
-<div bind:this={elem} class="flex justify-center items-center min-w-full min-h-full">
+<div bind:this={elem} class="flex justify-center items-center min-w-full min-h-full p-20">
 	<canvas bind:this={canvas} />
 </div>

@@ -156,6 +156,9 @@
 				scales: {
 					x: {
 						type: "time",
+						ticks: {
+							source: 'data'
+						}
 					},
 				},
 			},
