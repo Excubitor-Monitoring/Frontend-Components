@@ -28,8 +28,6 @@
 		window.addEventListener("FS.Partitions", (event) => {
 
 			filesystems = event.detail;
-			
-			console.log(event.detail);
 
 		});
 
@@ -41,7 +39,7 @@
 	});
 </script>
 
-<div bind:this={elem} class="flex justify-center items-center min-w-full min-h-full">
+<div bind:this={elem} class="flex flex-wrap gap-4 w-full min-h-full justify-evenly items-center">
 	{#each filesystems as filesystem}
 		<FsCard fs={filesystem}/>
 	{/each}

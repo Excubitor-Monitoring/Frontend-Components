@@ -29,4 +29,4 @@
 	});
 </script>
 
-<div bind:this={container}/>
+<div style="height: 100%;" bind:this={container}/>
