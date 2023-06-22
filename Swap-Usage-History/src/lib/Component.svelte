@@ -230,7 +230,7 @@
 			/>
 		</div>
 
-		<select bind:value={preset} on:change={() => setTime(preset)}>
+		<select class=" p-2 rounded" bind:value={preset} on:change={() => setTime(preset)}>
 			<option value="10min">10min.</option>
 			<option value="1h">1h</option>
 			<option value="1D">1D</option>
