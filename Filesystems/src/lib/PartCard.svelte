@@ -11,7 +11,7 @@
 <div class=" flex flex-col justify-between gap-1 p-1 border-gray-600 border-2 rounded">
     <h2 class=" text-xl font-bold">{part.name}</h2>
 
-    <table class=" w-full text-left bg-gray-200 rounded">
+    <table class=" w-full text-left bg-zinc-100 rounded">
         <tr>
             <th class="text-left">Size</th>
             <th class="text-left">Used</th>
