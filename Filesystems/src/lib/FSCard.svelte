@@ -15,10 +15,12 @@
             datasets: [
                 {
                     label: "Used",
+                    backgroundColor: '#ff638480',
                     data: [],
                 },
                 {
                     label: "Free",
+                    backgroundColor: '#36a2eb80',
                     data: [],
                 },
             ],
