@@ -2,6 +2,7 @@
     import Chart from "chart.js/auto";
     import { onMount } from "svelte";
     import PartCard from "./PartCard.svelte";
+    import { formatSize } from "./formatSize";
 
     export let fs;
 
@@ -52,12 +53,12 @@
     });
 </script>
 
-<div class="card p-4 border-2 border-solid border-black rounded-lg flex flex-col justify-center" on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)} on:mou>
+<div class="card p-4 border border-solid border-black rounded-lg flex flex-col justify-center" on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)} on:mou>
 
     <div class=" min-h-full flex flex-col justify-between items-stretch" style={!hover || !fs.partitions?.length ? "" : "display: none"}>
         <div>
             <h1 class="text-center text-2xl font-bold" >{fs.name}</h1>
-            Size: {fs.size}
+            Size: {formatSize(fs.size)}
         </div>
         <div class=" grow">
             <canvas class="" bind:this={canvas} />
