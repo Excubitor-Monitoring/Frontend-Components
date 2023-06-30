@@ -20,6 +20,7 @@
 	import Chart from "chart.js/auto";
 	import "chartjs-adapter-date-fns";
     import { setDate } from "date-fns";
+	import Modal from "./Modal.svelte";
 
 	const tzoffset = (new Date()).getTimezoneOffset() * 60000;
 
@@ -30,8 +31,11 @@
 	let to_date;
 	let density;
 	let preset;
+	let show_modal = false;
 
 	$: density_time = 10**density;
+	$: noValues = Math.ceil(((new Date(to_date)).valueOf() - (new Date(from_date)).valueOf()) / density_time);
+
 
 	function printdata() {
 		console.log("From: ", from_date);
@@ -91,7 +95,8 @@
 
 	function setCustom(){
 		preset = "custom";
-		getData();
+		if(noValues > 100) show_modal = true;
+		else getData();
 	}
 
 	function getTime(ms_time){
@@ -199,3 +204,7 @@
 
 	<canvas bind:this={canvas} />
 </div>
+
+{#if show_modal}
+	<Modal callback={getData} values={noValues} closeModal={() => show_modal = false}/>
+{/if}
