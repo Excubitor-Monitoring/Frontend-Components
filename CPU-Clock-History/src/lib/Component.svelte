@@ -36,13 +36,6 @@
 
 	$: density_time = 10**density;
 
-	function printdata() {
-		console.log("From: ", from_date);
-		console.log("To: ", to_date);
-		console.log("Density: ", density);
-		console.log("Preset: ", preset);
-	}
-
 	$: noValues = Math.ceil(((new Date(to_date)).valueOf() - (new Date(from_date)).valueOf()) / density_time);
 
 	function getData() {
@@ -133,15 +126,12 @@
 					data: [],
 				};
 			});
-			console.log("CHARTDATA", chart_data);
 			event_data.forEach(time_element => {
 				Object.values(time_element.message.value).forEach(cpu_item => {
 					const data_item = chart_data[cpu_item.id]
 					data_item.data.push({x: time_element.timestamp ,y: cpu_item.clock_speed})
 				})
 			})
-
-			console.log(chart_data);
 
 			chart.data.datasets = chart_data;
 
@@ -180,14 +170,17 @@
 		<div class="flex flex-col gap-2">
 			<div class=" flex flex-row gap-5">
 				<div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label>From: </label>
 					<input type="datetime-local" bind:value={from_date} on:change={setCustom}>
 				</div>
 				<div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label>To: </label>
 					<input type="datetime-local" bind:value={to_date} on:change={setCustom}>
 				</div>
 			</div>
+			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<label>Density ({getTime(density_time)}): </label>
 			<input type="range" min="1" max="9" step="any" bind:value={density} on:change={setCustom}>
 		</div>

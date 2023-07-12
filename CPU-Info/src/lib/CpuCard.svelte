@@ -17,8 +17,6 @@
     export let cache_size = 0;
     export let flags = "";
 
-    $: console.log(clock_speed);
-
     let hover = false;
 
 	let tooltip = "\n";
@@ -62,7 +60,7 @@
                 ><th class="pr-4 whitespace-nowrap">ID</th><td>{id}</td></tr
             >
             <tr
-                ><th class="py-2 py-2 pr-4 whitespace-nowrap">Core ID</th><td
+                ><th class="py-2 pr-4 whitespace-nowrap">Core ID</th><td
                     >{core_id}</td
                 ></tr
             >
