@@ -5,9 +5,7 @@
 	import { onMount } from "svelte/internal";
 	export const setStyle = () => {
 		// inject css in shadow root manually (we done using <style>, Svelte removes unsed css selectors)
-		console.log(elem);
 		const root = elem?.getRootNode();
-		console.log(root);
 		if (root) {
 			root.querySelectorAll("style").forEach((style) =>
 				root.removeChild(style)
@@ -32,9 +30,6 @@
 
 		window.addEventListener("Memory.MemInfo", (event) => {
 			let time = Date.now();
-			console.log(chart.data.datasets);
-			console.log(event.detail);
-
 			
 			Object.entries(event.detail).forEach((element, index) => {
 				if (chart.data.datasets[index] == undefined) chart.data.datasets[index] = {label: element[0], data: []}

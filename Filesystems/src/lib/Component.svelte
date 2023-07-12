@@ -6,9 +6,7 @@
     import FsCard from "./FSCard.svelte";
 	export const setStyle = () => {
 		// inject css in shadow root manually (we done using <style>, Svelte removes unsed css selectors)
-		console.log(elem);
 		const root = elem?.getRootNode();
-		console.log(root);
 		if (root) {
 			root.querySelectorAll("style").forEach((style) =>
 				root.removeChild(style)

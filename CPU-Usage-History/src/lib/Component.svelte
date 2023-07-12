@@ -36,14 +36,6 @@
 	$: density_time = 10**density;
 	$: noValues = Math.ceil(((new Date(to_date)).valueOf() - (new Date(from_date)).valueOf()) / density_time);
 
-
-	function printdata() {
-		console.log("From: ", from_date);
-		console.log("To: ", to_date);
-		console.log("Density: ", density);
-		console.log("Preset: ", preset);
-	}
-
 	function getData() {
 
 		window.dispatchEvent(
@@ -58,9 +50,6 @@
 				},
 			})
 		);
-
-		console.log(new Date(from_date));
-		console.log(new Date(to_date));
 
 	}
 
@@ -140,8 +129,6 @@
 					data_item.data.push({x: time_element.timestamp ,y: cpu_item[1].usage})
 				})
 			})
-
-			console.log(chart_data);
 
 			chart.data.datasets = chart_data;
 

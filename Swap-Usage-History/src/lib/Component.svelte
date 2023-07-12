@@ -36,14 +36,6 @@
 	$: density_time = 10 ** density;
 	$: noValues = Math.ceil(((new Date(to_date)).valueOf() - (new Date(from_date)).valueOf()) / density_time);
 
-
-	function printdata() {
-		console.log("From: ", from_date);
-		console.log("To: ", to_date);
-		console.log("Density: ", density);
-		console.log("Preset: ", preset);
-	}
-
 	function getData() {
 		window.dispatchEvent(
 			new CustomEvent("HIST2SOCKET", {
@@ -59,8 +51,6 @@
 			})
 		);
 
-		console.log(new Date(from_date));
-		console.log(new Date(to_date));
 	}
 
 	function setTime(template) {
@@ -143,8 +133,6 @@
 				};
 			});
 
-			console.log(event_data);
-
 			let chart_data = Object.keys(event_data[0].message.value).map(
 				(item) => {
 					return {
@@ -154,12 +142,9 @@
 				}
 			);
 
-			console.log("CHARTDATA", chart_data);
-
 			event_data.forEach((time_element) => {
 				Object.entries(time_element.message.value).forEach(
 					(ram_item) => {
-						console.log("RAMITEM", ram_item);
 						const data_item = chart_data.find(
 							(chart_data_item) =>
 								chart_data_item.label == ram_item[0]

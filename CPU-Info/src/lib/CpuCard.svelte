@@ -17,8 +17,6 @@
     export let cache_size = 0;
     export let flags = "";
 
-    $: console.log(clock_speed);
-
     let hover = false;
 
 	let tooltip = "\n";

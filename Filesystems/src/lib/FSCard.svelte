@@ -43,7 +43,6 @@
     let chart;
 
     onMount(() => {
-        console.log(fs);
         if (fs.partitions != null) {
             fs.partitions.forEach((part) => {
                 config.data.labels.push(part.name);

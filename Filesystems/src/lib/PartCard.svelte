@@ -1,12 +1,8 @@
 <script>
-    import { onMount } from "svelte";
     import { formatSize } from "./formatSize";
 
     export let part;
 
-    onMount(() => {
-        console.log(part);
-    })
 </script>
 
 <div class=" flex flex-col justify-between gap-1 p-1 border-black border rounded">
