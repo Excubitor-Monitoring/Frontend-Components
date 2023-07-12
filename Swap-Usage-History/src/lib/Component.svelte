@@ -208,6 +208,7 @@
 		<div class="flex flex-col gap-2">
 			<div class=" flex flex-row gap-5">
 				<div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label>From: </label>
 					<input
 						type="datetime-local"
@@ -216,6 +217,7 @@
 					/>
 				</div>
 				<div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label>To: </label>
 					<input
 						type="datetime-local"
@@ -224,6 +226,7 @@
 					/>
 				</div>
 			</div>
+			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<label>Density ({getTime(density_time)}): </label>
 			<input
 				type="range"
